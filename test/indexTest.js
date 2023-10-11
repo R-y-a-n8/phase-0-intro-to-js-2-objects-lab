@@ -1,3 +1,12 @@
+
+function updateEmployeeWithKeyAndValue(employee, key, value) {
+  const updatedEmployee = { ...employee };
+  updatedEmployee[key] = value;
+  return updatedEmployee;
+}
+
+const employee = { name: 'Sam' };
+
 describe('employees', function() {
   describe('updateEmployeeWithKeyAndValue(employee, key, value)', function () {
     beforeEach(function () {
@@ -9,6 +18,7 @@ describe('employees', function() {
     });
 
     it('returns an employee with the original key value pairs and the new key value pair', function () {
+      const updated = updateEmployeeWithKeyAndValue(employee, 'streetAddress', '11 Broadway');
       expect(updateEmployeeWithKeyAndValue(employee, 'streetAddress', '11 Broadway')).to.eql({
         name: 'Sam',
         streetAddress: '11 Broadway'
@@ -22,6 +32,11 @@ describe('employees', function() {
     });
   });
 
+  function destructivelyUpdateEmployeeWithKeyAndValue(employee, key, value) {
+    employee[key] = value;
+
+    return employee;
+  }
   describe('destructivelyUpdateEmployeeWithKeyAndValue(employee, key, value)', function () {
     it('updates `employee` with the given `key` and `value` (it is destructive) and returns the entire updated employee', function () {
       expect(destructivelyUpdateEmployeeWithKeyAndValue(employee, 'streetAddress', '12 Broadway')).to.eql({
@@ -36,6 +51,13 @@ describe('employees', function() {
     });
   });
 
+  function deleteFromEmployeeByKey(employee, key) {
+    const newEmployee = { ...employee };
+
+    delete newEmployee[key]
+
+    return newEmployee;
+  }
   describe('deleteFromEmployeeByKey(employee, key)', function () {
     it('deletes `key` from a clone of employee and returns the new employee (it is non-destructive)', function () {
       let newEmployee = deleteFromEmployeeByKey(employee, 'name');
@@ -51,6 +73,11 @@ describe('employees', function() {
     });
   });
 
+  function destructivelyDeleteFromEmployeeByKey(employee, key) {
+    delete employee[key]
+
+    return employee;
+  }
   describe('destructivelyDeleteFromEmployeeByKey(employee, key)', function () {
     it('returns employee without the deleted key/value pair', function () {
       let newEmployee = destructivelyDeleteFromEmployeeByKey(employee, 'name');
